@@ -15,5 +15,7 @@ contract Bridge is ReentrancyGuard, Ownable, IERC721Receiver {
         address holder;
     }
 
-    mapping(uint25 => Custody) public holdCustudy;
+    mapping(uint256 => Custody) public holdCustudy;
+
+    event NftCustoddy(uint256 indexed tokenId, address holder);
 }
