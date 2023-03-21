@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Bridge is ReentrancyGuard, Ownable, IERC721Receiver {
+contract BridgeCustody is ReentrancyGuard, Ownable, IERC721Receiver {
     uint256 costNative = 1 ether;
     uint256 costCustom = 0.000075 ether;
 
