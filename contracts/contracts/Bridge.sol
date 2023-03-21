@@ -80,8 +80,16 @@ contract BridgeCustody is ReentrancyGuard, Ownable, IERC721Receiver {
         address from,
         uint256,
         bytes calldata
-    ) external pure override returns (bytes32) {
+    ) external pure override returns (bytes4) {
         require(from == address(0x0), "Cannot Recieve Nfts Directly");
         return IERC721Receiver.onERC721Received.selector;
+    }
+
+    function withdrawCustom() external payable onlyOwner {
+        payToken.transfer(msg.sender, payToken.balanceOf(address(this)));
+    }
+
+    function withdrawNative() external payable onlyOwner {
+        require(payable(msg.sender).send(address(this).balance));
     }
 }
