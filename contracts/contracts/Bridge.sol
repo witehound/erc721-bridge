@@ -43,4 +43,20 @@ contract Bridge is ReentrancyGuard, Ownable, IERC721Receiver {
 
         emit NftCustody(_tokenId, msg.sender);
     }
+
+    function retainNFTN(uint256 _tokenId) public payable nonReentrant {
+        require(
+            msg.value >= costNative,
+            "Not enough balance to complete transaction"
+        );
+        require(nft.ownerOf(_tokenId) == msg.sender, "Nft is not yours");
+        require(holderCustudy[_tokenId].tokenId == 0, "Nft already stored");
+        payable(address(this)).transfer(costNative);
+
+        holderCustudy[_tokenId] = Custody(_tokenId, msg.sender);
+
+        nft.transferFrom(msg.sender, address(this), _tokenId);
+
+        emit NftCustody(_tokenId, msg.sender);
+    }
 }
