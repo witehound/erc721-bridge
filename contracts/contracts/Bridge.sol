@@ -59,4 +59,16 @@ contract Bridge is ReentrancyGuard, Ownable, IERC721Receiver {
 
         emit NftCustody(_tokenId, msg.sender);
     }
+
+    function updateOwner(
+        uint256 _tokenId,
+        address _newOwner
+    ) public nonReentrant onlyOwner {
+        holderCustudy[_tokenId] = Custody(_tokenId, _newOwner);
+        emit NftCustody(_tokenId, _newOwner);
+    }
+
+    function releaseNft(uint256 _tokenId, address wallet) public onlyOwner {
+        nft.transferFrom(msg.sender, wallet, _tokenId);
+    }
 }
